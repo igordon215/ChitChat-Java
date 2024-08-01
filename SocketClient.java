@@ -14,6 +14,7 @@ public class SocketClient extends JFrame implements ActionListener, Runnable {
     JScrollPane jp = new JScrollPane(textArea);
     JTextField input_Text = new JTextField();
     JMenuBar menuBar = new JMenuBar();
+    JList<String> userList = new JList<>(); // Adding for userList
 
     // Networking components
     Socket sk;
@@ -33,8 +34,13 @@ public class SocketClient extends JFrame implements ActionListener, Runnable {
         textArea.setForeground(new Color(50, 205, 50));
         textArea.setEditable(false);
         textArea.setFont(new Font("Monospaced", Font.BOLD, 13));
-
         textArea.setBackground(new Color(0, 0, 0));
+
+        userList.setBackground(new Color(230, 230, 250));
+        userList.setFont(new Font("Tahoma", Font.PLAIN, 12));
+
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jp, new JScrollPane(userList));
+        splitPane.setResizeWeight(0.8);
 
         /*
          JMenu helpMenu = new JMenu("Help");
@@ -59,6 +65,10 @@ public class SocketClient extends JFrame implements ActionListener, Runnable {
         input_Text.setBackground(new Color(230, 230, 250));
 
         getContentPane().add(input_Text, "South");
+
+        JButton listButton = new JButton("User List");
+        listButton.addActionListener(e -> {pw.println("/list");});
+        getContentPane().add(listButton, "North");
 
         // Set window properties
         setSize(325, 411);
@@ -111,8 +121,14 @@ public class SocketClient extends JFrame implements ActionListener, Runnable {
         try {
             // Continuosly read and display incoming messages
             while ((data = br.readLine()) != null) {
-                textArea.append(data + "\n"); //textArea Decrease the position of the box's scroll bar by the length of the text entered
-                textArea.setCaretPosition(textArea.getText().length());
+                if (data.startsWith("Current users: ")) {
+                    String[] users = data.substring("Current users: ".length()).split(", ");
+                    SwingUtilities.invokeLater(() -> {userList.setListData(users);});
+                } else {
+                    textArea.append(data + "\n"); //textArea Decrease the position of the box's scroll bar by the length of the text entered
+                    textArea.setCaretPosition(textArea.getText().length());
+                }
+
             }
         } catch (Exception e) {
             System.out.println(e + "--> Client run fail");

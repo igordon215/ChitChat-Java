@@ -5,3 +5,17 @@
 [2024-08-01 10:35:59] INFO: New client joined: ian
 [2024-08-01 10:35:59] INFO: Broadcasted message: **[ian] Entered**
 [2024-08-01 10:36:13] INFO: Broadcasted message: [ian] Enter your Message:chitchat mod is fun
+[2024-08-01 15:35:41] INFO: Server started. Waiting for client connections...
+[2024-08-01 15:36:50] INFO: Server started. Waiting for client connections...
+[2024-08-01 15:37:06] INFO: New connection from: /127.0.0.1
+[2024-08-01 15:37:06] INFO: New client thread added. Total clients: 1
+[2024-08-01 15:37:06] INFO: New client joined: IPG
+[2024-08-01 15:37:06] INFO: Broadcasted message: **[IPG] Entered**
+[2024-08-01 15:37:16] INFO: Broadcasted message: [IPG] Enter your Message:Are We Having A Good Time?
+[2024-08-01 15:38:12] INFO: Server started. Waiting for client connections...
+[2024-08-01 15:38:31] INFO: New connection from: /127.0.0.1
+[2024-08-01 15:38:31] INFO: New client thread added. Total clients: 1
+[2024-08-01 15:38:31] INFO: New client joined: IPG
+[2024-08-01 15:38:31] INFO: Broadcasted message: **[IPG] Entered**
+[2024-08-01 15:38:33] INFO: Message from IPG: /list
+[2024-08-01 15:38:33] INFO: Broadcasted message: [IPG] /list
