@@ -100,7 +100,7 @@ public class SocketServer {
         for (ServerThread st : list) {
             st.pw.println(message);
         }
-        logger.info("Broadcasted message: " + message);
+        //logger.info("Broadcasted message: " + message);
     }
 
     public String getUserList() {
