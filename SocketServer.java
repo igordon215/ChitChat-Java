@@ -8,6 +8,8 @@ import java.net.Socket;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.*;
 
 public class SocketServer {
@@ -16,6 +18,7 @@ public class SocketServer {
     InetAddress addr;
 
     ArrayList<ServerThread> list = new ArrayList<ServerThread>();
+    Map<String, ServerThread> userMap = new HashMap<String, ServerThread>(); // Add to keep track of users
 
     // Add Logger
     static final Logger logger = Logger.getLogger(SocketServer.class.getName());
@@ -81,12 +84,14 @@ public class SocketServer {
     // Add a new client thread from the list
     public void addThread(ServerThread st) {
         list.add(st);
+        userMap.put(st.name, st);
         logger.info("New client thread added. Total clients: " + list.size());
     }
 
     // Remove a client thread from the list
     public void removeThread(ServerThread st) {
         list.remove(st); //remove
+        userMap.remove(st.name);
         logger.info("Client thread removed. Total clients: " + list.size());
     }
 
@@ -98,6 +103,10 @@ public class SocketServer {
         logger.info("Broadcasted message: " + message);
     }
 
+    public String getUserList() {
+        return String.join(", ", userMap.keySet());
+    }
+    // This is our MAIN METHOD
     public static void main(String[] args) {
         new SocketServer();
     }
@@ -131,8 +140,9 @@ class ServerThread extends Thread {
             String data;
             while ((data = br.readLine()) != null) {
                 // Check for list Command
-                if (data == "/list") {
-                    pw.println("a");
+                if (data.equals("/list")) {
+                    String userList = server.getUserList();
+                    pw.println("Current users: " + userList);
                     server.logger.info("Message from " + name + ": " + data);
                 }
                 // Broadcast the received message to all clients
