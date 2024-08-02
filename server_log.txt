@@ -114,3 +114,42 @@
 [2024-08-02 10:28:59] INFO: Sent weather report to 123aaa for location: Salt Lake
 [2024-08-02 10:29:02] INFO: Sent user list to 123aaa
 [2024-08-02 10:29:02] INFO: Sent user list to 123aaa
+[2024-08-02 10:41:04] INFO: Server started. Waiting for client connections...
+[2024-08-02 10:41:14] INFO: New connection from: /127.0.0.1
+[2024-08-02 10:41:14] INFO: New client thread added. Total clients: 1
+[2024-08-02 10:41:14] INFO: New client joined: 123123123
+[2024-08-02 10:41:16] INFO: Sent user list to 123123123
+[2024-08-02 10:41:16] INFO: Sent user list to 123123123
+[2024-08-02 10:41:17] INFO: Sent user list to 123123123
+[2024-08-02 10:41:24] INFO: Sent weather report to 123123123 for location: 1231231231312311322
+[2024-08-02 10:50:34] INFO: Server started. Waiting for client connections...
+[2024-08-02 10:50:42] INFO: New connection from: /127.0.0.1
+[2024-08-02 10:50:42] INFO: New client thread added. Total clients: 1
+[2024-08-02 10:50:42] INFO: New client joined: ipg
+[2024-08-02 10:52:47] INFO: Sent user list to ipg
+[2024-08-02 10:52:47] INFO: Message from ipg: /list
+[2024-08-02 10:52:49] INFO: Sent user list to ipg
+[2024-08-02 10:52:49] INFO: Message from ipg: /list
+[2024-08-02 10:52:50] INFO: Sent user list to ipg
+[2024-08-02 10:52:50] INFO: Message from ipg: /list
+[2024-08-02 10:52:52] INFO: Sent user list to ipg
+[2024-08-02 10:52:52] INFO: Message from ipg: /list
+[2024-08-02 10:52:52] INFO: Sent user list to ipg
+[2024-08-02 10:52:52] INFO: Message from ipg: /list
+[2024-08-02 10:52:52] INFO: Sent user list to ipg
+[2024-08-02 10:52:52] INFO: Message from ipg: /list
+[2024-08-02 10:52:53] INFO: Sent user list to ipg
+[2024-08-02 10:52:53] INFO: Message from ipg: /list
+[2024-08-02 10:52:53] INFO: Sent user list to ipg
+[2024-08-02 10:52:53] INFO: Message from ipg: /list
+[2024-08-02 10:52:54] INFO: Sent user list to ipg
+[2024-08-02 10:52:54] INFO: Message from ipg: /list
+[2024-08-02 10:52:54] INFO: Sent user list to ipg
+[2024-08-02 10:52:54] INFO: Message from ipg: /list
+[2024-08-02 10:52:56] INFO: Sent user list to ipg
+[2024-08-02 10:52:56] INFO: Message from ipg: /list
+[2024-08-02 10:52:58] INFO: Sent user list to ipg
+[2024-08-02 10:52:58] INFO: Message from ipg: /list
+[2024-08-02 10:53:04] INFO: Sent weather report to ipg for location: abcv
+[2024-08-02 10:53:10] INFO: Sent user list to ipg
+[2024-08-02 10:53:10] INFO: Message from ipg: /list

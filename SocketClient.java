@@ -2,9 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 @SuppressWarnings("serial")
@@ -16,6 +14,8 @@ public class SocketClient extends JFrame implements ActionListener, Runnable {
     JMenuBar menuBar = new JMenuBar();
     JList<String> userList = new JList<>(); // Adding for userList
     JButton weatherButton; // adding for weather button
+    JButton sendFileButton;
+    Socket fileSocket;
 
     // Networking components
     Socket sk;
@@ -73,17 +73,26 @@ public class SocketClient extends JFrame implements ActionListener, Runnable {
 
         getContentPane().add(input_Text, "South");
 
+        //SEND FILE
+        sendFileButton = new JButton("Send File");
+        sendFileButton.addActionListener(e -> sendFile());
+
         //USER LIST BUTTON
         JButton listButton = new JButton("User List");
         listButton.addActionListener(e -> {
             pw.println("/list");
             System.out.println("Sent /list command to server"); // Debug print
         });
-        //getContentPane().add(listButton, "North");
+        //buttons
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(listButton);
         buttonPanel.add(weatherButton);
+        buttonPanel.add(sendFileButton);
         getContentPane().add(buttonPanel, "North");
+
+
+
+
 
         // Set window properties
         setSize(325, 411);
@@ -122,6 +131,36 @@ public class SocketClient extends JFrame implements ActionListener, Runnable {
 
         } catch (Exception e) {
             System.out.println(e + " Socket Connection error");
+        }
+    }
+
+    private void sendFile() {
+        JFileChooser fileChooser = new JFileChooser();
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+                fileSocket = new Socket(sk.getInetAddress(), 1235);  // New socket for file transfer
+                pw.println("/file " + selectedFile.getName());  // Notify server about incoming file
+
+                FileInputStream fis = new FileInputStream(selectedFile);
+                OutputStream os = fileSocket.getOutputStream();
+
+                byte[] buffer = new byte[4096];
+                int bytesRead;
+                while ((bytesRead = fis.read(buffer)) != -1) {
+                    os.write(buffer, 0, bytesRead);
+                }
+
+                fis.close();
+                os.close();
+                fileSocket.close();
+
+                textArea.append("File sent: " + selectedFile.getName() + "\n");
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error sending file: " + e.getMessage());
+            }
         }
     }
 

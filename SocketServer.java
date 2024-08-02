@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -17,6 +14,7 @@ public class SocketServer {
     ServerSocket server;
     Socket sk;
     InetAddress addr;
+    ServerSocket fileServer;
 
     ArrayList<ServerThread> list = new ArrayList<ServerThread>();
     Map<String, ServerThread> userMap = new HashMap<String, ServerThread>(); // Add to keep track of users
@@ -28,7 +26,7 @@ public class SocketServer {
         try {
             // Set up Logging
             setupLogging();
-
+            fileServer = new ServerSocket(1235);  // New ServerSocket for file transfers
             // Set up the server address (localhost)
             addr = InetAddress.getByName("127.0.0.1");
             //addr = InetAddress.getByName("192.168.43.1");
@@ -163,6 +161,9 @@ class ServerThread extends Thread {
                     String userList = server.getUserList();
                     pw.println("Current users: " + userList);
                     server.logger.info("Sent user list to " + name);
+                }  if (data.startsWith("/file ")) {
+                    String fileName = data.substring(6);
+                    receiveAndBroadcastFile(fileName);
                 } else if (data.startsWith("/weather")) {
                     String location = data.substring(9).trim();
                     String weatherReport = getMockWeather(location);
@@ -191,5 +192,29 @@ class ServerThread extends Thread {
         String condition = conditions[(int) (Math.random() * conditions.length)];
         int temperature = (int) (Math.random() * 40) - 10;
         return String.format("Weather for %s: %s, %d°C", location, condition, temperature);
+    }
+
+    private void receiveAndBroadcastFile(String fileName) {
+        try {
+            Socket fileSocket = server.fileServer.accept();
+            InputStream is = fileSocket.getInputStream();
+
+            File receivedFile = new File("received_" + fileName);
+            FileOutputStream fos = new FileOutputStream(receivedFile);
+
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = is.read(buffer)) != -1) {
+                fos.write(buffer, 0, bytesRead);
+            }
+
+            fos.close();
+            is.close();
+            fileSocket.close();
+
+            server.broadCast("File received: " + fileName + ". Size: " + receivedFile.length() + " bytes");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
