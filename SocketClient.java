@@ -36,11 +36,16 @@ public class SocketClient extends JFrame implements ActionListener, Runnable {
         textArea.setFont(new Font("Monospaced", Font.BOLD, 13));
         textArea.setBackground(new Color(0, 0, 0));
 
+
+
+        userList = new JList<>();
         userList.setBackground(new Color(230, 230, 250));
         userList.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jp, new JScrollPane(userList));
         splitPane.setResizeWeight(0.8);
+
+        getContentPane().add(splitPane, BorderLayout.CENTER);
 
         /*
          JMenu helpMenu = new JMenu("Help");
@@ -67,7 +72,10 @@ public class SocketClient extends JFrame implements ActionListener, Runnable {
         getContentPane().add(input_Text, "South");
 
         JButton listButton = new JButton("User List");
-        listButton.addActionListener(e -> {pw.println("/list");});
+        listButton.addActionListener(e -> {
+            pw.println("/list");
+            System.out.println("Sent /list command to server"); // Debug print
+        });
         getContentPane().add(listButton, "North");
 
         // Set window properties
@@ -119,16 +127,22 @@ public class SocketClient extends JFrame implements ActionListener, Runnable {
     public void run() {
         String data = null;
         try {
-            // Continuosly read and display incoming messages
             while ((data = br.readLine()) != null) {
+                System.out.println("Received from server: " + data); // Debug print
                 if (data.startsWith("Current users: ")) {
-                    String[] users = data.substring("Current users: ".length()).split(", ");
-                    SwingUtilities.invokeLater(() -> {userList.setListData(users);});
+                    String userListString = data.substring("Current users: ".length()).trim();
+                    String[] users = userListString.isEmpty() ? new String[0] : userListString.split(", ");
+                    SwingUtilities.invokeLater(() -> {
+                        userList.setListData(users);
+                        textArea.append("Current users: " + String.join(", ", users) + "\n");
+                        textArea.setCaretPosition(textArea.getText().length());
+                        System.out.println("Updated user list: " + String.join(", ", users));
+                    });
+
                 } else {
-                    textArea.append(data + "\n"); //textArea Decrease the position of the box's scroll bar by the length of the text entered
+                    textArea.append(data + "\n");
                     textArea.setCaretPosition(textArea.getText().length());
                 }
-
             }
         } catch (Exception e) {
             System.out.println(e + "--> Client run fail");

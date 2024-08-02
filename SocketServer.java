@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.*;
+import java.util.stream.Collectors;
 
 public class SocketServer {
     ServerSocket server;
@@ -90,7 +91,7 @@ public class SocketServer {
 
     // Remove a client thread from the list
     public void removeThread(ServerThread st) {
-        list.remove(st); //remove
+        list.remove(st);
         userMap.remove(st.name);
         logger.info("Client thread removed. Total clients: " + list.size());
     }
@@ -104,7 +105,16 @@ public class SocketServer {
     }
 
     public String getUserList() {
-        return String.join(", ", userMap.keySet());
+//        if (userMap.isEmpty()) {
+//            return "No users connected";
+//        }
+//        return String.join(", ", userMap.keySet());
+        if (userMap.isEmpty()) {
+            return "No users connected";
+        }
+        return userMap.keySet().stream()
+                .filter(name -> name != null && !name.isEmpty())
+                .collect(Collectors.joining(", "));
     }
     // This is our MAIN METHOD
     public static void main(String[] args) {
@@ -130,12 +140,19 @@ class ServerThread extends Thread {
 
             // Set up writer for the outgoing messages
             pw = new PrintWriter(server.sk.getOutputStream(), true);
+
             // Read the client's name
             name = br.readLine();
-            // Server logger joined message
-            server.logger.info("New client joined: " + name);
-            // Broadcast that a new client has entered
-            server.broadCast("**[" + name + "] Entered**");
+            if (name != null && !name.isEmpty()) {
+                server.userMap.put(name, this);
+                // Server logger joined message
+                server.logger.info("New client joined: " + name);
+                // Broadcast that a new client has entered
+                server.broadCast("**[" + name + "] Entered**");
+            } else {
+                server.logger.warning("Client attempted to join with null or empty name");
+                return;  // Exit the thread if the name is invalid
+            }
 
             String data;
             while ((data = br.readLine()) != null) {
@@ -143,10 +160,12 @@ class ServerThread extends Thread {
                 if (data.equals("/list")) {
                     String userList = server.getUserList();
                     pw.println("Current users: " + userList);
+                    server.logger.info("Sent user list to " + name);
+                } else {
+                    // Broadcast the received message to all clients
+                    server.broadCast("[" + name + "] " + data);
                     server.logger.info("Message from " + name + ": " + data);
                 }
-                // Broadcast the received message to all clients
-                server.broadCast("[" + name + "] " + data);
             }
         } catch (Exception e) {
             //Remove the current thread from the ArrayList.

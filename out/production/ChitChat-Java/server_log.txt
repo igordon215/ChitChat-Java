@@ -21,3 +21,65 @@
 [2024-08-01 15:38:33] INFO: Broadcasted message: [IPG] /list
 [2024-08-01 19:25:27] INFO: Server started. Waiting for client connections...
 [2024-08-01 19:25:35] INFO: New connection from: /127.0.0.1
+[2024-08-01 19:26:00] INFO: Server started. Waiting for client connections...
+[2024-08-01 19:26:11] INFO: New connection from: /127.0.0.1
+[2024-08-01 19:26:11] INFO: New client thread added. Total clients: 1
+[2024-08-01 19:26:11] INFO: New client joined: 345
+[2024-08-02 09:15:08] INFO: Server started. Waiting for client connections...
+[2024-08-02 09:15:20] INFO: Server started. Waiting for client connections...
+[2024-08-02 09:15:30] INFO: New connection from: /127.0.0.1
+[2024-08-02 09:15:30] INFO: New client thread added. Total clients: 1
+[2024-08-02 09:15:30] INFO: New client joined: 1231a
+[2024-08-02 09:15:31] INFO: Message from 1231a: /list
+[2024-08-02 09:15:32] INFO: Message from 1231a: /list
+[2024-08-02 09:15:33] INFO: Message from 1231a: /list
+[2024-08-02 09:15:34] INFO: Message from 1231a: /list
+[2024-08-02 09:15:34] INFO: Message from 1231a: /list
+[2024-08-02 09:15:35] INFO: Message from 1231a: /list
+[2024-08-02 09:15:36] INFO: Message from 1231a: /list
+[2024-08-02 09:15:37] INFO: Message from 1231a: /list
+[2024-08-02 09:15:38] INFO: Message from 1231a: /list
+[2024-08-02 09:15:46] INFO: Message from 1231a: /list
+[2024-08-02 09:15:46] INFO: Message from 1231a: /list
+[2024-08-02 09:15:52] INFO: Message from 1231a: /list
+[2024-08-02 09:15:53] INFO: Message from 1231a: /list
+[2024-08-02 09:16:29] INFO: Server started. Waiting for client connections...
+[2024-08-02 09:16:38] INFO: New connection from: /127.0.0.1
+[2024-08-02 09:16:38] INFO: New client thread added. Total clients: 1
+[2024-08-02 09:16:38] INFO: New client joined: 123a
+[2024-08-02 09:16:39] INFO: Message from 123a: /list
+[2024-08-02 09:22:17] INFO: Server started. Waiting for client connections...
+[2024-08-02 09:22:23] INFO: New connection from: /127.0.0.1
+[2024-08-02 09:22:23] INFO: New client thread added. Total clients: 1
+[2024-08-02 09:22:23] INFO: New client joined: 123a
+[2024-08-02 09:22:25] INFO: Sent user list to 123a
+[2024-08-02 09:22:30] INFO: Sent user list to 123a
+[2024-08-02 09:22:30] INFO: Sent user list to 123a
+[2024-08-02 09:22:31] INFO: Sent user list to 123a
+[2024-08-02 09:25:42] INFO: Server started. Waiting for client connections...
+[2024-08-02 09:25:48] INFO: New connection from: /127.0.0.1
+[2024-08-02 09:25:48] INFO: New client thread added. Total clients: 1
+[2024-08-02 09:25:48] INFO: New client joined: 123a
+[2024-08-02 09:25:50] INFO: Sent user list to 123a
+[2024-08-02 09:25:51] INFO: Sent user list to 123a
+[2024-08-02 09:25:52] INFO: Sent user list to 123a
+[2024-08-02 09:25:52] INFO: Sent user list to 123a
+[2024-08-02 09:25:52] INFO: Sent user list to 123a
+[2024-08-02 09:25:53] INFO: Sent user list to 123a
+[2024-08-02 09:25:53] INFO: Sent user list to 123a
+[2024-08-02 09:25:53] INFO: Sent user list to 123a
+[2024-08-02 09:34:19] INFO: Server started. Waiting for client connections...
+[2024-08-02 09:34:27] INFO: New connection from: /127.0.0.1
+[2024-08-02 09:34:27] INFO: New client thread added. Total clients: 1
+[2024-08-02 09:34:27] INFO: New client joined: 1`23xs
+[2024-08-02 09:34:28] INFO: Sent user list to 1`23xs
+[2024-08-02 09:34:30] INFO: Sent user list to 1`23xs
+[2024-08-02 09:34:30] INFO: Sent user list to 1`23xs
+[2024-08-02 09:34:31] INFO: Sent user list to 1`23xs
+[2024-08-02 09:39:54] INFO: Server started. Waiting for client connections...
+[2024-08-02 09:40:02] INFO: New connection from: /127.0.0.1
+[2024-08-02 09:40:02] INFO: New client thread added. Total clients: 1
+[2024-08-02 09:40:02] INFO: New client joined: 1234aaa
+[2024-08-02 09:40:03] INFO: Sent user list to 1234aaa
+[2024-08-02 09:40:05] INFO: Sent user list to 1234aaa
+[2024-08-02 09:40:07] INFO: Sent user list to 1234aaa
