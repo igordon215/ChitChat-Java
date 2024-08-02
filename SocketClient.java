@@ -15,6 +15,7 @@ public class SocketClient extends JFrame implements ActionListener, Runnable {
     JTextField input_Text = new JTextField();
     JMenuBar menuBar = new JMenuBar();
     JList<String> userList = new JList<>(); // Adding for userList
+    JButton weatherButton; // adding for weather button
 
     // Networking components
     Socket sk;
@@ -36,11 +37,12 @@ public class SocketClient extends JFrame implements ActionListener, Runnable {
         textArea.setFont(new Font("Monospaced", Font.BOLD, 13));
         textArea.setBackground(new Color(0, 0, 0));
 
-
-
         userList = new JList<>();
         userList.setBackground(new Color(230, 230, 250));
         userList.setFont(new Font("Tahoma", Font.PLAIN, 12));
+
+        weatherButton = new JButton("Weather");
+        weatherButton.addActionListener(e -> getWeather());
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jp, new JScrollPane(userList));
         splitPane.setResizeWeight(0.8);
@@ -71,12 +73,17 @@ public class SocketClient extends JFrame implements ActionListener, Runnable {
 
         getContentPane().add(input_Text, "South");
 
+        //USER LIST BUTTON
         JButton listButton = new JButton("User List");
         listButton.addActionListener(e -> {
             pw.println("/list");
             System.out.println("Sent /list command to server"); // Debug print
         });
-        getContentPane().add(listButton, "North");
+        //getContentPane().add(listButton, "North");
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(listButton);
+        buttonPanel.add(weatherButton);
+        getContentPane().add(buttonPanel, "North");
 
         // Set window properties
         setSize(325, 411);
@@ -118,6 +125,13 @@ public class SocketClient extends JFrame implements ActionListener, Runnable {
         }
     }
 
+    private void getWeather() {
+        String location = JOptionPane.showInputDialog(this, "Enter your location:", "Weather", JOptionPane.QUESTION_MESSAGE);
+        if (location != null && !location.trim().isEmpty()) {
+            pw.println("/weather " + location);
+        }
+    }
+
     public static void main(String[] args) {
         // Create SocketClient instance and connect to server
         new SocketClient().serverConnection(); //Method call at the same time object creation
@@ -138,7 +152,12 @@ public class SocketClient extends JFrame implements ActionListener, Runnable {
                         textArea.setCaretPosition(textArea.getText().length());
                         System.out.println("Updated user list: " + String.join(", ", users));
                     });
-
+                } else if (data.startsWith("Weather for")) {
+                    String finalData = data;
+                    SwingUtilities.invokeLater(() -> {
+                        textArea.append(finalData + "\n");
+                        textArea.setCaretPosition(textArea.getText().length());
+                    });
                 } else {
                     textArea.append(data + "\n");
                     textArea.setCaretPosition(textArea.getText().length());

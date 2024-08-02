@@ -116,6 +116,9 @@ public class SocketServer {
                 .filter(name -> name != null && !name.isEmpty())
                 .collect(Collectors.joining(", "));
     }
+
+
+
     // This is our MAIN METHOD
     public static void main(String[] args) {
         new SocketServer();
@@ -156,11 +159,15 @@ class ServerThread extends Thread {
 
             String data;
             while ((data = br.readLine()) != null) {
-                // Check for list Command
                 if (data.equals("/list")) {
                     String userList = server.getUserList();
                     pw.println("Current users: " + userList);
                     server.logger.info("Sent user list to " + name);
+                } else if (data.startsWith("/weather")) {
+                    String location = data.substring(9).trim();
+                    String weatherReport = getMockWeather(location);
+                    pw.println(weatherReport);
+                    server.logger.info("Sent weather report to " + name + " for location: " + location);
                 } else {
                     // Broadcast the received message to all clients
                     server.broadCast("[" + name + "] " + data);
@@ -177,5 +184,12 @@ class ServerThread extends Thread {
             server.logger.severe("Error in client thread: " + e.getMessage());
             System.out.println(e + "---->");
         }
+    }
+
+    private String getMockWeather(String location) {
+        String[] conditions = {"Sunny", "Cloudy", "Rainy", "Snowy", "Windy"};
+        String condition = conditions[(int) (Math.random() * conditions.length)];
+        int temperature = (int) (Math.random() * 40) - 10;
+        return String.format("Weather for %s: %s, %d°C", location, condition, temperature);
     }
 }
